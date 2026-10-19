@@ -1,16 +1,16 @@
 # SpendWise — Personal Expense Tracker
 
-SpendWise is a full-stack personal expense tracking web application built to help users manage their income, expenses, and monthly budgets through a clean dashboard.
+SpendWise is a full-stack personal expense tracking web application built to help users manage their income, expenses, and monthly budgets through a clean, responsive dashboard.
 
 ## Features
 
 - **User Authentication** — Sign up, log in, and log out securely.
-- **Expense Management** — Add, view, update, and delete transactions.
+- **Transaction Management** — Add, view, update, and delete income and expense transactions.
 - **Dashboard** — View financial summaries and spending trends.
 - **Budget Management** — Set monthly budgets and category-wise budgets.
-- **Visual Analytics** — Explore spending patterns through charts.
+- **Visual Analytics** — Explore spending patterns through interactive charts.
 - **CSV Export** — Export transaction records.
-- **Responsive Interface** — Use the application across desktop and mobile screen sizes.
+- **Responsive Interface** — Access the application across desktop and mobile screen sizes.
 
 ## Tech Stack
 
@@ -22,12 +22,14 @@ SpendWise is a full-stack personal expense tracking web application built to hel
 | Database | MySQL |
 | Database Connectivity | JDBC |
 | Build Tool | Maven |
-| Server | Apache Tomcat 11 |
+| Application Server | Apache Tomcat 11 |
 
 ## Project Structure
 
 ```text
 SpendWise/
+├── database/
+│   └── schema.sql
 ├── src/
 │   └── main/
 │       ├── java/com/spendwise/
@@ -50,22 +52,59 @@ SpendWise/
 - IntelliJ IDEA or another Java IDE
 - Maven support
 
-## Setup
+## Setup and Installation
 
-1. Clone this repository.
-2. Open the project in IntelliJ IDEA.
-3. Create the required MySQL database and tables using the project's database schema.
-4. Configure the `DB_USER` and `DB_PASSWORD` environment variables with your MySQL credentials.
-5. Build the project as a WAR using Maven.
-6. Deploy the WAR to Apache Tomcat 11.
-7. Open the application in your browser at `http://localhost:8080/SpendWise`.
+### 1. Clone the Repository
 
-**Note:** The database schema SQL script is not currently included in this repository. Prepare the schema before running the application on a new machine.
+```bash
+git clone https://github.com/namdevvansh47-369/SpendWise.git
+cd SpendWise
+```
+
+### 2. Open the Project
+
+Open the project folder in IntelliJ IDEA and allow Maven to import the dependencies.
+
+### 3. Set Up the Database
+
+For a **fresh installation**, open MySQL Workbench and execute the SQL script located at:
+
+```text
+database/schema.sql
+```
+
+This script creates the `spendwise_db` database and the required tables.
+
+**Important:** This schema is intended for a new installation. Do not run it as a migration on an existing populated database.
+
+### 4. Configure Database Credentials
+
+Configure the following environment variables for the Tomcat process:
+
+- `DB_USER` — Your MySQL username
+- `DB_PASSWORD` — Your MySQL password
+
+Do not put real database credentials in source code or commit them to GitHub.
+
+### 5. Build the Project
+
+Build the project as a WAR using the Maven tool window in IntelliJ IDEA or a configured Maven installation.
+
+### 6. Deploy and Run
+
+Deploy the generated WAR to Apache Tomcat 11. Start the server and open:
+
+```text
+http://localhost:8080/SpendWise
+```
+
+The exact deployment context may depend on your Tomcat configuration.
 
 ## Security
 
-- Passwords are handled using BCrypt hashing.
-- Database credentials should be supplied through environment variables.
+- Passwords are stored using BCrypt hashing.
+- Database credentials are supplied through environment variables.
+- Database queries are scoped to the authenticated user.
 - Never commit passwords, access tokens, or other secrets to version control.
 
 ## Future Improvements
