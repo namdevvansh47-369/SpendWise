@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SpendWise | Login & Sign up</title>
+    <style>
+        :root{--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#6c768b;--primary:#4f46e5;--border:#e2e8f0;--green:#16794b;--red:#b42318}
+        *{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,#e0e7ff 0,transparent 38%),var(--bg);color:var(--text);display:grid;place-items:center;padding:24px}
+        .shell{width:min(980px,100%);min-height:570px;display:grid;grid-template-columns:.95fr 1.05fr;background:var(--card);border:1px solid #e2e8f0;border-radius:26px;overflow:hidden;box-shadow:0 24px 70px #1e293b1f}
+        .intro{padding:46px 42px;color:white;background:linear-gradient(145deg,#4338ca,#6366f1 60%,#818cf8);display:flex;flex-direction:column;justify-content:space-between}
+        .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.5px}.mark{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#ffffff2e;font-size:23px}
+        .intro h1{font-size:clamp(30px,4vw,43px);line-height:1.12;letter-spacing:-1.3px;margin:55px 0 18px}.intro p{color:#ffffffd1;line-height:1.7;margin:0;max-width:330px}.benefits{display:grid;gap:15px;margin-top:32px;color:#fffffff2;font-size:14px}.benefits span:before{content:"✓";display:inline-grid;place-items:center;width:22px;height:22px;margin-right:10px;border-radius:50%;background:#ffffff2e}.foot{font-size:12px;color:#ffffffb3;margin-top:40px}
+        .formside{padding:44px clamp(24px,5vw,56px);display:flex;flex-direction:column;justify-content:center}.formside h2{margin:0 0 8px;font-size:29px;letter-spacing:-.7px}.sub{margin:0 0 27px;color:var(--muted);font-size:14px;line-height:1.5}
+        .tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:5px;border-radius:12px;background:#f1f5f9;margin-bottom:24px}.tab{border:0;border-radius:9px;padding:11px;background:transparent;color:var(--muted);font-weight:700;cursor:pointer}.tab.active{color:var(--primary);background:white;box-shadow:0 1px 4px #0f172a14}
+        .field{margin-bottom:16px}label{display:block;margin-bottom:7px;font-size:13px;font-weight:700}input{width:100%;padding:13px 14px;border:1px solid var(--border);border-radius:10px;outline:none;color:var(--text);font:inherit;font-size:14px;background:white}input:focus{border-color:#818cf8;box-shadow:0 0 0 3px #6366f122}
+        .pw{position:relative}.pw input{padding-right:76px}.toggle{position:absolute;right:11px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--primary);cursor:pointer;font-size:12px;font-weight:800}
+        .submit{width:100%;border:0;border-radius:11px;padding:14px;margin-top:5px;color:white;background:var(--primary);font-size:15px;font-weight:800;cursor:pointer}.submit:hover{background:#3730a3}.submit:disabled{opacity:.65;cursor:wait}
+        .message{display:none;padding:11px 12px;border-radius:9px;margin:0 0 15px;font-size:13px;line-height:1.45}.message.show{display:block}.message.error{background:#fef3f2;color:var(--red)}.message.success{background:#ecfdf3;color:var(--green)}.hint{color:var(--muted);font-size:12px;line-height:1.5;margin:15px 0 0}.hidden{display:none}
+        @media(max-width:720px){body{padding:12px}.shell{grid-template-columns:1fr}.intro{padding:26px}.intro h1{margin:28px 0 12px;font-size:31px}.benefits,.foot{display:none}.formside{padding:30px 24px}}
+    </style>
+</head>
+<body>
+<main class="shell">
+    <section class="intro">
+        <div>
+            <div class="brand"><span class="mark">↗</span> SpendWise</div>
+            <h1>Make every rupee count.</h1>
+            <p>A clearer view of your spending. A smarter way to manage your money.</p>
+            <div class="benefits"><span>Track income and expenses</span><span>Plan monthly and category budgets</span><span>Understand your money habits</span></div>
+        </div><div class="foot">Your money. Your goals. Your control.</div>
+    </section>
+    <section class="formside">
+        <h2 id="heading">Welcome back</h2><p class="sub" id="subtitle">Log in to continue to your SpendWise dashboard.</p>
+        <div class="tabs" role="tablist" aria-label="Account access"><button class="tab active" id="loginTab" type="button" role="tab" aria-selected="true">Log in</button><button class="tab" id="signupTab" type="button" role="tab" aria-selected="false">Create account</button></div>
+        <div class="message" id="message" role="status" aria-live="polite"></div>
+        <form id="authForm">
+            <div class="field hidden" id="nameField"><label for="fullName">Full name</label><input id="fullName" name="fullName" type="text" maxlength="100" autocomplete="name" placeholder="Your full name"></div>
+            <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" maxlength="150" autocomplete="email" required placeholder="you@example.com"></div>
+            <div class="field"><label for="password">Password</label><div class="pw"><input id="password" name="password" type="password" minlength="8" maxlength="72" autocomplete="current-password" required placeholder="At least 8 characters"><button class="toggle" id="togglePassword" type="button">Show</button></div></div>
+            <button class="submit" id="submitButton" type="submit">Log in</button>
+        </form>
+        <p class="hint" id="hint">Use the email and password linked to your account.</p>
+    </section></main>
+<script>
+    const AUTH_URL = new URL("api/auth", window.location.href).toString();
+    const form=document.getElementById("authForm"),loginTab=document.getElementById("loginTab"),signupTab=document.getElementById("signupTab");
+    const nameField=document.getElementById("nameField"),fullName=document.getElementById("fullName"),email=document.getElementById("email"),password=document.getElementById("password");
+    const heading=document.getElementById("heading"),subtitle=document.getElementById("subtitle"),submitButton=document.getElementById("submitButton"),message=document.getElementById("message"),togglePassword=document.getElementById("togglePassword");
+    let mode="login";
+    function showMessage(text,type="error"){message.textContent=text;message.className=`message show ${type}`;}
+    function clearMessage(){message.textContent="";message.className="message";}
+    function setMode(next){mode=next;const signup=mode==="signup";nameField.classList.toggle("hidden",!signup);fullName.required=signup;password.autocomplete=signup?"new-password":"current-password";heading.textContent=signup?"Create your account":"Welcome back";subtitle.textContent=signup?"Create an account to start managing your money.":"Log in to continue to your SpendWise dashboard.";submitButton.textContent=signup?"Create account":"Log in";loginTab.classList.toggle("active",!signup);signupTab.classList.toggle("active",signup);loginTab.setAttribute("aria-selected",String(!signup));signupTab.setAttribute("aria-selected",String(signup));clearMessage();}
+    loginTab.addEventListener("click",()=>setMode("login"));signupTab.addEventListener("click",()=>setMode("signup"));
+    togglePassword.addEventListener("click",()=>{const show=password.type==="password";password.type=show?"text":"password";togglePassword.textContent=show?"Hide":"Show";});
+    form.addEventListener("submit",async event=>{event.preventDefault();clearMessage();if(mode==="signup"&&!fullName.value.trim()){showMessage("Please enter your full name.");fullName.focus();return;}if(password.value.length<8||password.value.length>72){showMessage("Password must be between 8 and 72 characters.");password.focus();return;}
+    const body=new URLSearchParams();body.set("action",mode);body.set("email",email.value.trim());body.set("password",password.value);if(mode==="signup")body.set("fullName",fullName.value.trim());
+    submitButton.disabled=true;submitButton.textContent=mode==="signup"?"Creating account...":"Logging in...";
+    try{const response=await fetch(AUTH_URL,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body,credentials:"same-origin"});const result=await response.json().catch(()=>({}));if(!response.ok||result.success!==true){showMessage(result.message||`Request failed (${response.status}).`);return;}showMessage(result.message||"Success! Opening dashboard...","success");window.location.assign(new URL("index.html",window.location.href).toString());}
+    catch(error){showMessage("Could not reach SpendWise. Check that Tomcat is running and try again.");}
+    finally{submitButton.disabled=false;submitButton.textContent=mode==="signup"?"Create account":"Log in";}
+    });
+    fetch(AUTH_URL,{method:"GET",credentials:"same-origin",cache:"no-store"}).then(response=>{if(response.ok)window.location.replace(new URL("index.html",window.location.href).toString());}).catch(()=>{});
+</script>
+</body></html>

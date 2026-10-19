@@ -1,0 +1,15 @@
+### 1. Check all transactions
+GET http://localhost:8080/SpendWise/api/transactions
+
+### 2. Add a test transaction
+POST http://localhost:8080/SpendWise/api/transactions
+Content-Type: application/json
+
+{
+  "description": "College expenses",
+  "amount": 250.00,
+  "type": "EXPENSE",
+  "category": "Education",
+  "transaction_date": "2026-10-16"
+}
+
