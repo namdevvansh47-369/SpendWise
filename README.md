@@ -12,6 +12,17 @@ SpendWise is a full-stack personal expense tracking web application built to hel
 - **CSV Export** — Export transaction records.
 - **Responsive Interface** — Access the application across desktop and mobile screen sizes.
 
+## Application Screenshots
+
+### Login Page
+![SpendWise Login Page](screenshots/login.png)
+
+### Dashboard
+![SpendWise Dashboard](screenshots/dashboard.png)
+
+### Transactions and Budgets
+![SpendWise Transactions and Budgets](screenshots/transactions.png)
+
 ## Tech Stack
 
 | Layer | Technologies |
